@@ -1,5 +1,9 @@
 #include "ident.hpp"
 
+#include <algorithm>
+#include <vector>
+
+
 using namespace std;
 
 Ident::Ident(const string n) {
@@ -8,7 +12,7 @@ Ident::Ident(const string n) {
     assign  = false;
 }
 
-bool Ident::operator== (const string& s) const { 
+bool Ident::operator==(const string& s) const { 
     return name == s; 
 }
 
@@ -46,4 +50,14 @@ int Ident::get_value() const {
 
 void Ident::put_value(int v) { 
     value = v; 
+}
+
+vector<Ident> TID;
+
+int put(const string& buf) {
+    vector<Ident>::iterator k;
+    if ((k = find( TID.begin(), TID.end(), buf)) != TID.end())
+        return k - TID.begin();
+    TID.push_back(Ident(buf));
+    return TID.size() - 1;
 }

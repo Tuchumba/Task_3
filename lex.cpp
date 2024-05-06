@@ -1,16 +1,17 @@
 #include "lex.hpp"
+#include "scanner.hpp"
 
 using namespace std;
 
-type_of_lex lex::get_type() const { 
+type_of_lex Lex::get_type() const { 
     return t_lex; 
 }
 
-int lex::get_value() const {
+int Lex::get_value() const {
     return v_lex; 
 }
 
-ostream& operator<< (ostream &s, Lex l) {
+ostream& operator<<(ostream &s, Lex l) {
     string t;
     if (l.t_lex <= LEX_WRITE)
         t = Scanner::TW[l.t_lex];
@@ -19,7 +20,7 @@ ostream& operator<< (ostream &s, Lex l) {
     else if (l.t_lex == LEX_NUM)
         t = "NUMB";
     else if (l.t_lex == LEX_ID)
-        t = TID[l.v_lex].get_name ();
+        t = TID[l.v_lex].get_name();
     else if (l.t_lex == POLIZ_LABEL)
         t = "Label";
     else if (l.t_lex == POLIZ_ADDRESS)

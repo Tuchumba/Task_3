@@ -1,21 +1,21 @@
 #ifndef IDENT_HPP
 #define IDENT_HPP
 
-#include "lex.hpp"
-#include <string>
+#include "type_of_lex.hpp"
 
+#include <string>
 
 class Ident {
 public:
     Ident() : declare(false), assign(false) {}
-    Ident(const std::string n);\
+    Ident(const std::string n);
 
-    bool operator== (const std::string& s) const;
+    bool operator==(const std::string& s) const;
     
-    string get_name() const;
+    std::string get_name() const;
     bool get_declare() const;
     void put_declare();
-    type_of_lex get_type();
+    type_of_lex get_type() const;
     void put_type(type_of_lex t);
     bool get_assign() const;
     void put_assign();
@@ -29,5 +29,6 @@ private:
     int value;
 };
 
+int put(const std::string& buf);
 
 #endif
