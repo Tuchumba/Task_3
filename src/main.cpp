@@ -6,7 +6,7 @@ using namespace std;
 
 int main() {
     try {
-        Interpretator I ( "prog.txt" );
+        Interpretator I ( "program.mlg" ); //mlg - Model Language
         I.interpretation ();
         return 0;
     }

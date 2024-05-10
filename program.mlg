@@ -1,0 +1,7 @@
+program
+var aint1 , aint2:int;
+begin
+    aint1 := 13;
+    aint2 := 24;
+    aint1 := aint2 - aint1
+end@
