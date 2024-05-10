@@ -2,6 +2,14 @@
 
 using namespace std;
 
+const char *
+Scanner::TW [] = { "", "and", "begin", "bool", "do", "else", "end", "if", "false", "int", "not", "or", "program",
+                      "read", "then", "true", "var", "while", "write", NULL };
+ 
+const char *
+Scanner::TD [] = { "@", ";", ",", ":", ":=", "(", ")", "=", "<", ">", "+", "-", "*", "/", "<=", "!=", ">=", NULL };
+
+
 int Scanner::look(const string buf, const char** list) {
     int i = 0;
     while(list[i]) {
@@ -98,7 +106,7 @@ Lex Scanner::get_lex() {
             case ALE:
                 if (c == '=') {
                     buf.push_back(c);
-                    j = look(buf, TD);
+                    j = look(buf,TD);
                     return Lex((type_of_lex)(j + (int)LEX_FIN), j);
                 }
                 else {
