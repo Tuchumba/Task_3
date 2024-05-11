@@ -1,19 +1,14 @@
 #ifndef PARSER_HPP
 #define PARSER_HPP
 
-#include "type_of_lex.hpp"
-#include "lex.hpp"
-#include "scanner.hpp"
+#include "settings.hpp"
+#include "Lex.hpp"
+#include "Scanner.hpp"
 
 #include <stack>
 
 
 class Parser {
-public:
-    std::vector<Lex> poliz;
-    Parser(const char *program) : scan(program) {}
-    void analyze();
-private:
     Lex curr_lex;
     type_of_lex c_type;
     int c_val;
@@ -41,7 +36,12 @@ private:
         c_type = curr_lex.get_type();
         c_val = curr_lex.get_value();
     }
-
+    
+public:
+    std::vector<Lex> poliz;
+    void output_poliz();
+    Parser(const char *program) : scan(program) {}
+    void analyze();
 };
 
 #endif

@@ -1,5 +1,5 @@
-#include "lex.hpp"
-#include "scanner.hpp"
+#include "Lex.hpp"
+#include "Scanner.hpp"
 
 using namespace std;
 

@@ -1,14 +1,5 @@
-#include "scanner.hpp"
-
+#include "Scanner.hpp"
 using namespace std;
-
-const char *
-Scanner::TW [] = { "", "and", "begin", "bool", "do", "else", "end", "if", "false", "int", "not", "or", "program",
-                      "read", "then", "true", "var", "while", "write", NULL };
- 
-const char *
-Scanner::TD [] = { "@", ";", ",", ":", ":=", "(", ")", "=", "<", ">", "+", "-", "*", "/", "<=", "!=", ">=", NULL };
-
 
 int Scanner::look(const string buf, const char** list) {
     int i = 0;
@@ -19,6 +10,14 @@ int Scanner::look(const string buf, const char** list) {
     }
     return 0;
 }
+
+const char *
+Scanner::TW [] = { "", "and", "begin", "bool", "do", "else", "end", "if", "false", "int", "not", "or", "program",
+                      "read", "then", "true", "var", "while", "write", NULL };
+ 
+const char *
+Scanner::TD [] = { "@", ";", ",", ":", ":=", "(", ")", "=", "<", ">", "+", "-", "*", "/", "<=", "!=", ">=", NULL };
+
 
 void Scanner::gc() {
     c = fgetc(fp);
@@ -52,6 +51,7 @@ Lex Scanner::get_lex() {
                     CS = COM;
                 }
                 else if (c == ':' || c == '<' || c == '>') { 
+                    //may go before '='
                     buf.push_back(c);
                     CS = ALE; 
                 }

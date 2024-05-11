@@ -1,8 +1,8 @@
 #ifndef LEX_HPP
 #define LEX_HPP
 
-#include "type_of_lex.hpp"
-#include "ident.hpp"
+#include "settings.hpp"
+#include "Ident.hpp"
 
 #include <vector>
 #include <ostream>

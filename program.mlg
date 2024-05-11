@@ -2,6 +2,6 @@ program
 var aint1 , aint2:int;
 begin
     aint1 := 13;
-    aint2 := 24;
-    aint1 := aint2 - aint1
+    if aint1 > 0 then aint2 := 24 - aint1 else aint2 := 0;
+    write(aint2)
 end@

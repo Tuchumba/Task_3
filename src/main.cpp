@@ -1,4 +1,4 @@
-#include "interpretator.hpp"
+#include "Interpretator.hpp"
 
 #include <iostream>
 
@@ -10,11 +10,11 @@ int main() {
         I.interpretation ();
         return 0;
     }
-    catch (char c) {
+    catch (char& c) {
         cout << "unexpected symbol " << c << endl;
         return 1;
     }
-    catch (Lex l) {
+    catch (Lex& l) {
         cout << "unexpected lexeme " << l << endl;
         return 1;
     }

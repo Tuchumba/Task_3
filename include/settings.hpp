@@ -1,5 +1,5 @@
-#ifndef TYPE_OF_LEX_HPP
-#define TYPE_OF_LEX_HPP
+#ifndef SETTINGS_HPP
+#define SETTINGS_HPP
 
 enum type_of_lex {
     LEX_NULL,                                                                                   //0

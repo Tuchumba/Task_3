@@ -1,8 +1,8 @@
 #ifndef INTERPRETATOR_HPP
 #define INTERPRETATOR_HPP
 
-#include "parser.hpp"
-#include "executer.hpp"
+#include "Parser.hpp"
+#include "Executer.hpp"
 
 class Interpretator {
     Parser pars;

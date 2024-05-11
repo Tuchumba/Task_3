@@ -1,4 +1,4 @@
-#include "ident.hpp"
+#include "Ident.hpp"
 
 #include <algorithm>
 #include <vector>
@@ -7,7 +7,7 @@
 using namespace std;
 
 Ident::Ident(const string n) {
-    name = n;
+    name = n;   
     declare = false; 
     assign  = false;
 }
