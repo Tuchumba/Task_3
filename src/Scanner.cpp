@@ -12,11 +12,11 @@ int Scanner::look(const string buf, const char** list) {
 }
 
 const char *
-Scanner::TW [] = { "", "and", "begin", "bool", "do", "else", "end", "if", "false", "int", "not", "or", "program",
+Scanner::TW [] = { "", "and", "begin", "false", "do", "else", "end", "if", "bool", "int", "record", "not", "or", "program",
                       "read", "then", "true", "var", "while", "write", NULL };
  
 const char *
-Scanner::TD [] = { "@", ";", ",", ":", ":=", "(", ")", "=", "<", ">", "+", "-", "*", "/", "<=", "!=", ">=", NULL };
+Scanner::TD [] = { "@", ";", ",", ":", ":=", "(", ")", "=", "<", ">", "+", "-", "*", "/", "<=", "!=", ">=", "{", "}", NULL };
 
 
 void Scanner::gc() {

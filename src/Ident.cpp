@@ -8,7 +8,7 @@ using namespace std;
 
 Ident::Ident(const string n) {
     name = n;   
-    declare = false; 
+    declare = false;
     assign  = false;
 }
 

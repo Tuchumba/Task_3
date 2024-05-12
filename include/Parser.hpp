@@ -22,15 +22,15 @@ class Parser {
     void S();
     void E();
     void E1();
-    void T();
+    void F1();
     void F();
-    void dec(type_of_lex type);
-    void check_id();
+    void declare(type_of_lex type);
+    void check_declared();
     void check_op();
     void check_not();
     void eq_type();
     void eq_bool();
-    void check_id_in_read();
+    void check_declared_in_read();
     void gl() {
         curr_lex = scan.get_lex();
         c_type = curr_lex.get_type();

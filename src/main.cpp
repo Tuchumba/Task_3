@@ -1,6 +1,7 @@
 #include "Interpretator.hpp"
 
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -18,7 +19,7 @@ int main() {
         cout << "unexpected lexeme " << l << endl;
         return 1;
     }
-    catch (const char *source) {
+    catch (const string& source) {
         cout << source << endl;
         return 1;
     }
