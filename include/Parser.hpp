@@ -18,7 +18,7 @@ class Parser {
     std::stack<type_of_lex> st_lex;
     void P();
     void D1(const std::string& name_space);
-    void D();
+    void D(const std::string& name_space);
     void B();
     void S();
     void E();
@@ -35,7 +35,6 @@ class Parser {
     void gl() {
         curr_lex = scan.get_lex();
         c_type = curr_lex.get_type();
-        std::cout << c_type << std::endl;
         c_val = curr_lex.get_value();
     }
     char* name_before_dot();

@@ -1,0 +1,17 @@
+P → program D1; B@
+D1 → var D {,D}
+D → I {, I}: [ int | bool | record[D1] ]
+B → begin S {;S} end
+S → I1 := E | if E then S else S | while E do S | B | read (I1) | write (E)
+E → E1 [ = | < | > | != ] E1 | E1
+E1 → T {[ + | - | or ] T}
+T → F {[ * | / | and ] F}
+F → I | N | L | not F | (E)
+L → true | false
+I1 → I | I.I1
+I → C | IC | IR
+N → R | NR
+C → a | b | ... | z | A | B | ... | Z
+R → 0 | 1 | 2 | ... | 9
+
+L,I1,I,N,C,R are processing in Scanner

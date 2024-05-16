@@ -33,29 +33,29 @@ void Parser::P() {
     } else {
         throw curr_lex;       
     }
-    D1(nullptr);
+    D1("");
     if(c_type == LEX_SEMICOLON) {
-        gl();        
+        gl();
     } else {
         throw curr_lex;        
     }
     B();
 }
 
-void Parser::D1(const string& name_space ) {
-    if(c_type == LEX_VAR) {
+void Parser::D1(const string& name_space){
+    if(c_type == LEX_VAR){
         gl();
-        D();
+        D(name_space);
         while(c_type == LEX_COMMA) {
             gl();
-            D();
+            D(name_space);
         }
     } else {
         throw curr_lex;        
     }
 }
 
-void Parser::D() {
+void Parser::D(const string& name_space){
     if(c_type != LEX_ID) {
         throw curr_lex;        
     } else {
@@ -75,6 +75,7 @@ void Parser::D() {
         if( c_type != LEX_COLON ) {
             throw curr_lex;            
         } else {
+            rename_with_namespace(name_space);
             gl();
             switch(c_type) {
                 case LEX_INT:
@@ -284,20 +285,21 @@ void Parser::F() {
 }
 
 void Parser::rename_with_namespace(const std::string& name_space){
-  std::stack<int> tmp;
-  while (!st_int.empty()) {
-    tmp.push(st_int.top());
-    TID[st_int.top()].add_namespace(name_space);
-    st_int.pop();
-  }
-  while (!tmp.empty()) {
-    st_int.push(tmp.top());
-    tmp.pop();
-  }
-  std::cout << std::endl;
+    if(!name_space.empty()){
+        std::stack<int> tmp;
+        while (!st_int.empty()) {
+            tmp.push(st_int.top());
+            TID[st_int.top()].add_namespace(name_space);
+            st_int.pop();
+        }
+        while (!tmp.empty()) {
+            st_int.push(tmp.top());
+            tmp.pop();
+        }
+    }
 }
 
-void Parser::declare(type_of_lex type) {
+void Parser::declare(type_of_lex type){
     int i;
     while(!st_int.empty()) {
         from_stack(st_int, i);
@@ -307,7 +309,8 @@ void Parser::declare(type_of_lex type) {
             if(type == LEX_RECORD){
                 gl();
                 if(c_type != LEX_LBRACKET) throw curr_lex;
-                D1(TID[i].get_name()); 
+                gl();
+                D1(TID[i].get_name());
                 if(c_type != LEX_RBRACKET) throw curr_lex;
             }
             TID[i].put_declare();
