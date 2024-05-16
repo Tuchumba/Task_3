@@ -1,1 +1,0 @@
-/usr/bin/g++ -g CMakeFiles/Task3.dir/main.cpp.o CMakeFiles/Task3.dir/interpretator.cpp.o CMakeFiles/Task3.dir/executer.cpp.o CMakeFiles/Task3.dir/scanner.cpp.o CMakeFiles/Task3.dir/ident.cpp.o CMakeFiles/Task3.dir/lex.cpp.o CMakeFiles/Task3.dir/parser.cpp.o -o Task3 
