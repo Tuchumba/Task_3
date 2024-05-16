@@ -4,6 +4,7 @@
 #include "type_of_lex.hpp"
 
 #include <string>
+#include <vector>
 
 class Ident {
 public:
@@ -29,6 +30,9 @@ private:
     int value;
 };
 
-int put(const std::string& buf);
+//int put(const std::string& buf);
+int get(const std::string& buf);
+
+void TID_declare(std::vector<std::vector<std::string>>& vars, type_of_lex type);
 
 #endif

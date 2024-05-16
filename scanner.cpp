@@ -5,10 +5,12 @@
 
 using namespace std;
 
+extern string global_buf;
+
 const char* Scanner::TW[] = {"", "and", "begin", "bool", "do", "else", "end", "if", "false", "int", "not", "or", "program", 
-                            "read", "then", "true", "var", "while", "write", NULL};
+                            "read", "then", "true", "var", "while", "write", "record", NULL};
  
-const char* Scanner::TD[] = {"@", ";", ",", ":", ":=", "(", ")", "=", "<", ">", "+", "-", "*", "/", "<=", "!=", ">=", NULL};
+const char* Scanner::TD[] = {"@", ";", ",", ".", ":", ":=", "(", ")", "=", "<", ">", "+", "-", "*", "/", "<=", "!=", ">=", NULL};
 
 int Scanner::look(const string buf, const char** list) {
     int i = 0;
@@ -31,6 +33,10 @@ Scanner::Scanner(const char * program) {
         //cout << errno << endl;
         throw "can't open file";
     }
+}
+
+void Scanner::put_status(bool s) {
+    status = s;
 }
 
 Lex Scanner::get_lex() {
@@ -75,7 +81,10 @@ Lex Scanner::get_lex() {
                 }
                 break;
             case IDENT:
-                if (isalpha(c) || isdigit(c)) {
+                if (isalpha(c) || isdigit(c) || c == '.') {
+                    if ((status == STATUS_DEC) && (c == '.')) {
+                        throw c;
+                    }
                     buf.push_back(c);
                 }
                 else {
@@ -84,8 +93,7 @@ Lex Scanner::get_lex() {
                         return Lex((type_of_lex)j, j);
                     }
                     else {
-                        j = put(buf);
-                        return Lex(LEX_ID, j);
+                        return Lex(LEX_ID, 0, buf);
                     }
                 }
                 break;

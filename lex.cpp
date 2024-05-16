@@ -13,16 +13,20 @@ int Lex::get_value() const {
     return v_lex; 
 }
 
+std::string Lex::get_str() const {
+    return s_lex;
+}
+
 ostream& operator<<(ostream &s, Lex l) {
     string t;
-    if (l.t_lex <= LEX_WRITE)
+    if (l.t_lex <= LEX_RECORD)
         t = Scanner::TW[l.t_lex];
     else if (l.t_lex >= LEX_FIN && l.t_lex <= LEX_GEQ)
         t = Scanner::TD[l.t_lex - LEX_FIN];
     else if (l.t_lex == LEX_NUM)
         t = "NUMB";
     else if (l.t_lex == LEX_ID)
-        t = TID[l.v_lex].get_name();
+        t = l.get_str();
     else if (l.t_lex == POLIZ_LABEL)
         t = "Label";
     else if (l.t_lex == POLIZ_ADDRESS)

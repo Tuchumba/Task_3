@@ -69,7 +69,7 @@ void Executer::execute(vector<Lex>& poliz) {
                 int k;
                 from_st (args, i);
                 if (TID[i].get_type() == LEX_INT) {
-                    cout << "Input int value for" << TID[i].get_name() << endl;
+                    cout << "Input int value for " << TID[i].get_name() << endl;
                     cin >> k;
                 }
                 else {

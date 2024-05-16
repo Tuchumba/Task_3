@@ -1,10 +1,12 @@
 #include "parser.hpp"
+#include "ident.hpp"
 
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
-extern std::vector<Ident> TID;
+extern vector<Ident> TID;
 
 template <class T, class T_EL>
 void from_st(T& st, T_EL& i) {
@@ -41,18 +43,24 @@ void Parser::P() {
 }
 
 void Parser::D1() {
-    if (c_type == LEX_VAR) {
+    if (c_type == LEX_VAR) {  
         gl();
-        D();
-        while (c_type == LEX_COMMA) {
-            gl();
-            D();
-        }
+       // std::cout << curr_lex << std::endl;                
+        D2();
     }
     else {
-        cout << curr_lex << endl;
+        //cout << curr_lex << endl;
         throw curr_lex;        
     }
+}
+
+void Parser::D2() {
+    D();
+    while (c_type == LEX_COMMA) {
+        gl();
+        D();
+    }
+    
 }
 
 void Parser::D() {
@@ -60,7 +68,7 @@ void Parser::D() {
         throw curr_lex;        
     }
     else {
-        st_int.push(c_val);
+        vars.back().push_back(curr_lex.get_str());
         gl();
         while (c_type == LEX_COMMA) {
             gl();
@@ -68,7 +76,7 @@ void Parser::D() {
                 throw curr_lex;                
             }
             else {
-                st_int.push(c_val);
+                vars.back().push_back(curr_lex.get_str());
                 gl();
             }
         }
@@ -78,12 +86,20 @@ void Parser::D() {
         else {
             gl();
             if (c_type == LEX_INT) {
-                dec(LEX_INT);
+                TID_declare(vars, LEX_INT);
                 gl();
             }
             else if (c_type == LEX_BOOL) {
-                dec(LEX_BOOL);
+                TID_declare(vars, LEX_BOOL);
                 gl();
+            }
+            else if (c_type == LEX_RECORD){
+                vars.push_back({});
+                gl();
+                D2();
+                if (c_type == LEX_SEMICOLON) {
+                    gl();        
+                }
             }
             else {
                 throw curr_lex;                    
@@ -93,6 +109,7 @@ void Parser::D() {
 }
 
 void Parser::B() {
+    scan.put_status(STATUS_CODE);
     if (c_type == LEX_BEGIN) {
         gl();
         S();
@@ -208,9 +225,9 @@ void Parser::S() {
         poliz.push_back(Lex(POLIZ_ADDRESS, c_val));
         gl();
         if (c_type == LEX_ASSIGN) {
-            gl ();
-            E ();
-            eq_type ();
+            gl();
+            E();
+            eq_type();
             poliz.push_back(Lex(LEX_ASSIGN));
         }
         else
@@ -293,19 +310,19 @@ void Parser::F() {
 }
 
 
-void Parser::dec(type_of_lex type) {
-    int i;
-    while (!st_int.empty()) {
-        from_st(st_int, i);
-        if (TID[i].get_declare()) {
-            throw "twice";            
-        }
-        else {
-            TID[i].put_declare();
-            TID[i].put_type(type);
-        }
-    }
-}
+// void Parser::dec(type_of_lex type) {
+//     int i;
+//     while (!st_int.empty()) {
+//         from_st(st_int, i);
+//         if (TID[i].get_declare()) {
+//             throw "twice";            
+//         }
+//         else {
+//             TID[i].put_declare();
+//             TID[i].put_type(type);
+//         }
+//     }
+// }
 
 void Parser::check_id() {
     if (TID[c_val].get_declare()) {
@@ -340,7 +357,7 @@ void Parser::check_not() {
         throw "wrong type is in not";        
     }
     else {
-        poliz.push_back ( Lex (LEX_NOT) );        
+        poliz.push_back(Lex(LEX_NOT));        
     }
 }
 
@@ -367,8 +384,9 @@ void Parser::check_id_in_read() {
 }
 
 void Parser::gl() {
-    curr_lex = scan.get_lex();
+    curr_lex = scan.get_lex();     
     c_type = curr_lex.get_type();
-    c_val = curr_lex.get_value();
-    cout << "Lexeme read: " << curr_lex << endl;
+    c_val = get(curr_lex.get_str());
+    //std::cout << c_type << ", " << c_val << std::endl;
+    //cout << "Lexeme read: " << curr_lex << endl;
 }
