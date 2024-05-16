@@ -1,4 +1,5 @@
 #include "Scanner.hpp"
+#include <iostream>
 using namespace std;
 
 int Scanner::look(const string buf, const char** list) {
@@ -16,7 +17,7 @@ Scanner::TW [] = { "", "and", "begin", "false", "do", "else", "end", "if", "bool
                       "read", "then", "true", "var", "while", "write", NULL };
  
 const char *
-Scanner::TD [] = { "@", ";", ",", ":", ":=", "(", ")", "=", "<", ">", "+", "-", "*", "/", "<=", "!=", ">=", "{", "}", NULL };
+Scanner::TD [] = { "@", ";", ",", ":", ":=", "(", ")", "=", "<", ">", "+", "-", "*", "/", "<=", "!=", ">=", "[", "]", ".", NULL };
 
 
 void Scanner::gc() {
@@ -65,22 +66,19 @@ Lex Scanner::get_lex() {
                     buf.push_back(c);
                     if ((j = look(buf, TD))){
                         return Lex((type_of_lex)(j + (int)LEX_FIN), j);
-                    }
-                    else {
+                    } else {
                         throw c;
                     }  
                 }
                 break;
             case IDENT:
-                if (isalpha(c) || isdigit(c)) {
+                if (isalpha(c) || isdigit(c) || c == '.') {
                     buf.push_back(c);
-                }
-                else {
+                } else {
                     ungetc(c, fp);
                     if ((j = look(buf, TW))) {
                         return Lex((type_of_lex)j, j);
-                        }
-                    else {
+                    } else {
                         j = put(buf);
                         return Lex(LEX_ID, j);
                     }
@@ -96,6 +94,7 @@ Lex Scanner::get_lex() {
                 }
                 break;
             case COM:
+                cout << "COM" << endl;
                 if (c == '}') {
                     CS = H;
                 }

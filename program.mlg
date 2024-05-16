@@ -1,10 +1,9 @@
 program
-var aint1,aint2 : int, bol : bool, rec : record;
+var aint1,aint2 : int, bol : bool;
 begin
     aint1 := 13;
-    if aint1 > 0 then aint2 := 24 - aint1 else aint2 := 0;
+    { if aint1 > 0 then aint2 := 24 - aint1 else aint2 := 0; }
     bol := true;
-    bol := false;
     write(bol);
     write(aint2)
 end@

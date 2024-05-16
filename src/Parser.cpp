@@ -33,7 +33,7 @@ void Parser::P() {
     } else {
         throw curr_lex;       
     }
-    D1(); 
+    D1(nullptr);
     if(c_type == LEX_SEMICOLON) {
         gl();        
     } else {
@@ -42,7 +42,7 @@ void Parser::P() {
     B();
 }
 
-void Parser::D1() {
+void Parser::D1(const string& name_space ) {
     if(c_type == LEX_VAR) {
         gl();
         D();
@@ -59,6 +59,7 @@ void Parser::D() {
     if(c_type != LEX_ID) {
         throw curr_lex;        
     } else {
+        check_has_dot();
         st_int.push(c_val);
         gl();
         while(c_type == LEX_COMMA) {
@@ -66,6 +67,7 @@ void Parser::D() {
             if(c_type != LEX_ID) {
                 throw curr_lex;                
             } else {
+                check_has_dot();
                 st_int.push(c_val);
                 gl();
             }
@@ -159,7 +161,7 @@ void Parser::S() {
         gl();
         if(c_type == LEX_LPAREN) {
             gl();
-            if(c_type == LEX_ID) {
+            if(c_type == LEX_ID){
                 check_declared_in_read();
                 poliz.push_back(Lex(POLIZ_ADDRESS, c_val));
                 gl();
@@ -192,11 +194,11 @@ void Parser::S() {
         else {
             throw curr_lex;            
         }
-    } else if(c_type == LEX_ID) { 
+    } else if(c_type == LEX_ID) {
         check_declared();
         poliz.push_back(Lex(POLIZ_ADDRESS, c_val));
         gl();
-        if(c_type == LEX_ASSIGN) {
+        if(c_type == LEX_ASSIGN){
             gl();
             E();
             eq_type();
@@ -241,39 +243,59 @@ void Parser::F1() {
 }
 
 void Parser::F() {
-    if(c_type == LEX_ID) {
+    switch (c_type) {
+    case LEX_ID:
         check_declared();
-        poliz.push_back(Lex( LEX_ID, c_val));
+        poliz.push_back(curr_lex);
         gl();
-    } else if(c_type == LEX_NUM) {
+        break;
+    case LEX_NUM:
         st_lex.push(LEX_INT);
         poliz.push_back(curr_lex);
         gl();
-    } else if(c_type == LEX_TRUE) {
+        break;
+    case LEX_TRUE:
         st_lex.push(LEX_BOOL);
         poliz.push_back(Lex(LEX_TRUE, 1));
         gl();
-    } else if(c_type == LEX_FALSE) {
+        break;
+    case LEX_FALSE:
         st_lex.push(LEX_BOOL);
         poliz.push_back(Lex(LEX_FALSE, 0));
         gl();
-    } else if(c_type == LEX_NOT) {
+        break;
+    case LEX_NOT:
         gl();
         F();
         check_not();
-    } else if(c_type == LEX_LPAREN) {
+        break;
+    case LEX_LPAREN:
         gl();
         E();
-        if(c_type == LEX_RPAREN)
+        if (c_type == LEX_RPAREN)
             gl();
         else {
             throw curr_lex;
         }
-    } else {
+        break;
+    default:
         throw curr_lex;
     }
 }
 
+void Parser::rename_with_namespace(const std::string& name_space){
+  std::stack<int> tmp;
+  while (!st_int.empty()) {
+    tmp.push(st_int.top());
+    TID[st_int.top()].add_namespace(name_space);
+    st_int.pop();
+  }
+  while (!tmp.empty()) {
+    st_int.push(tmp.top());
+    tmp.pop();
+  }
+  std::cout << std::endl;
+}
 
 void Parser::declare(type_of_lex type) {
     int i;
@@ -282,6 +304,12 @@ void Parser::declare(type_of_lex type) {
         if(TID[i].get_declare()) {
             throw "twice";
         } else {
+            if(type == LEX_RECORD){
+                gl();
+                if(c_type != LEX_LBRACKET) throw curr_lex;
+                D1(TID[i].get_name()); 
+                if(c_type != LEX_RBRACKET) throw curr_lex;
+            }
             TID[i].put_declare();
             TID[i].put_type(type);
         }
@@ -344,4 +372,25 @@ void Parser::check_declared_in_read() {
     if(!TID[c_val].get_declare()) {
         throw (string)"name " + TID[c_val].get_name() + " is not declared";
     }
+}
+
+char* Parser::name_before_dot(){
+    const char* str = TID[c_val].get_name().c_str();
+    const char* dot_pos = strchr(str, '.');
+
+    if (dot_pos == nullptr) return nullptr;
+
+    char* result = new char[dot_pos - str + 1];
+    strncpy(result, str, dot_pos - str);
+    result[dot_pos - str] = '\0';
+    return result;
+}
+
+void Parser::check_has_dot(){
+    char * test = name_before_dot();
+    if (test != nullptr) {
+        delete[] test;
+        throw curr_lex;
+    }
+    delete [] test;
 }

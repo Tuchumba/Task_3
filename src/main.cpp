@@ -5,9 +5,13 @@
 
 using namespace std;
 
-int main() {
+int main(int argc, char** argv) {
+    if (argc!= 2) {
+        cout << "Usage: " << argv[0] << " <filename>" << endl;
+        return 1;
+    }
     try {
-        Interpretator I ( "program.mlg" ); //mlg - Model Language
+        Interpretator I(argv[1]); //.mlg - Model Language
         I.interpretation ();
         return 0;
     }
@@ -22,5 +26,8 @@ int main() {
     catch (const string& source) {
         cout << source << endl;
         return 1;
+    }
+    catch(const char* source) {
+        cout << source << endl;
     }
 }

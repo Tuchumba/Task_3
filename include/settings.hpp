@@ -8,7 +8,7 @@ enum type_of_lex {
     LEX_NOT, LEX_OR, LEX_PROGRAM, LEX_READ, LEX_THEN, LEX_TRUE, LEX_VAR, LEX_WHILE, LEX_WRITE,
     //in Scanner::TD
     LEX_FIN, LEX_SEMICOLON, LEX_COMMA, LEX_COLON, LEX_ASSIGN, LEX_LPAREN, LEX_RPAREN, LEX_EQ, LEX_LSS,
-    LEX_GTR, LEX_PLUS, LEX_MINUS, LEX_TIMES, LEX_SLASH, LEX_LEQ, LEX_NEQ, LEX_GEQ, LEX_LCURLY, LEX_RCURLY,
+    LEX_GTR, LEX_PLUS, LEX_MINUS, LEX_TIMES, LEX_SLASH, LEX_LEQ, LEX_NEQ, LEX_GEQ, LEX_LBRACKET, LEX_RBRACKET, LEX_DOT,
 
     LEX_NUM,
     LEX_ID, // for variables
@@ -25,7 +25,7 @@ Scanner::TW
 
 Scanner::TD
     { "@", ";", ",", ":", ":=", "(", ")", "=", "<", ">", "+", "-",
-    "*", "/", "<=", "!=", ">=", "{", "}", NULL };
+    "*", "/", "<=", "!=", ">=", "[", "]", ".", NULL };
 */
 
 #endif

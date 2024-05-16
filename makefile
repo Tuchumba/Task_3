@@ -6,7 +6,7 @@ SRC := src
 INCLUDE := include
 
 LIBS := `fltk-config --ldflags`
-EXE := main
+EXE := interpreter.exe
 
 
 all: $(BIN)/$(EXE)

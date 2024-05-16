@@ -20,6 +20,10 @@ string Ident::get_name() const {
     return name; 
 }
 
+void Ident::add_namespace(const string& name_space) { 
+    name = name_space + '.' + name; 
+}
+
 bool Ident::get_declare() const { 
     return declare; 
 }
@@ -54,6 +58,8 @@ void Ident::put_value(int v) {
 
 vector<Ident> TID;
 
+//Puts `buf` into TID if `buf` isn't already in TID
+//Returns iterator if successful
 int put(const string& buf) {
     vector<Ident>::iterator k;
     if ((k = find( TID.begin(), TID.end(), buf)) != TID.end())

@@ -5,6 +5,7 @@
 #include "Lex.hpp"
 #include "Scanner.hpp"
 
+#include <iostream>
 #include <stack>
 
 
@@ -16,7 +17,7 @@ class Parser {
     std::stack<int> st_int;
     std::stack<type_of_lex> st_lex;
     void P();
-    void D1();
+    void D1(const std::string& name_space);
     void D();
     void B();
     void S();
@@ -34,9 +35,12 @@ class Parser {
     void gl() {
         curr_lex = scan.get_lex();
         c_type = curr_lex.get_type();
+        std::cout << c_type << std::endl;
         c_val = curr_lex.get_value();
     }
-    
+    char* name_before_dot();
+    void check_has_dot();
+    void rename_with_namespace(const std::string& name_space);
 public:
     std::vector<Lex> poliz;
     void output_poliz();
