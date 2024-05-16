@@ -6,8 +6,8 @@ using namespace std;
 
 int main() {
     try {
-        Interpretator I ( "prog.txt" );
-        I.interpretation ();
+        Interpretator I("test.txt");
+        I.interpretation();
         return 0;
     }
     catch (char c) {

@@ -36,12 +36,7 @@ private:
     void eq_type();
     void eq_bool();
     void check_id_in_read();
-    void gl() {
-        curr_lex = scan.get_lex();
-        c_type = curr_lex.get_type();
-        c_val = curr_lex.get_value();
-    }
-
+    void gl();
 };
 
 #endif

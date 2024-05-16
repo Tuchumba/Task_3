@@ -1,0 +1,3 @@
+/home/nikita/Документы/C++ Home work/Task3/Task_3/build/CMakeFiles/Task3.dir
+/home/nikita/Документы/C++ Home work/Task3/Task_3/build/CMakeFiles/edit_cache.dir
+/home/nikita/Документы/C++ Home work/Task3/Task_3/build/CMakeFiles/rebuild_cache.dir

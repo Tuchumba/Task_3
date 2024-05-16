@@ -5,6 +5,8 @@
 
 using namespace std;
 
+extern std::vector<Ident> TID;
+
 template <class T, class T_EL>
 void from_st(T& st, T_EL& i) {
     i = st.top(); st.pop();
@@ -66,8 +68,8 @@ void Executer::execute(vector<Lex>& poliz) {
             case LEX_READ:
                 int k;
                 from_st (args, i);
-                if (TID[i].get_type () == LEX_INT) {
-                    cout << "Input int value for" << TID[i].get_name () << endl;
+                if (TID[i].get_type() == LEX_INT) {
+                    cout << "Input int value for" << TID[i].get_name() << endl;
                     cin >> k;
                 }
                 else {

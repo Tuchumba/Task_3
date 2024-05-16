@@ -3,6 +3,8 @@
 
 using namespace std;
 
+extern std::vector<Ident> TID;
+
 type_of_lex Lex::get_type() const { 
     return t_lex; 
 }

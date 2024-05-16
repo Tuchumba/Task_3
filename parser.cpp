@@ -4,6 +4,8 @@
 
 using namespace std;
 
+extern std::vector<Ident> TID;
+
 template <class T, class T_EL>
 void from_st(T& st, T_EL& i) {
     i = st.top(); st.pop();
@@ -28,7 +30,7 @@ void Parser::P() {
     else {
         throw curr_lex;       
     }
-    D1(); 
+    D1();
     if (c_type == LEX_SEMICOLON) {
         gl();        
     }
@@ -48,6 +50,7 @@ void Parser::D1() {
         }
     }
     else {
+        cout << curr_lex << endl;
         throw curr_lex;        
     }
 }
@@ -69,17 +72,17 @@ void Parser::D() {
                 gl();
             }
         }
-        if ( c_type != LEX_COLON ) {
+        if (c_type != LEX_COLON) {
             throw curr_lex;            
         }
         else {
-            gl ();
-            if ( c_type == LEX_INT ) {
-                dec ( LEX_INT );
-                gl ();
+            gl();
+            if (c_type == LEX_INT) {
+                dec(LEX_INT);
+                gl();
             }
             else if (c_type == LEX_BOOL) {
-                dec( LEX_BOOL );
+                dec(LEX_BOOL);
                 gl();
             }
             else {
@@ -252,7 +255,7 @@ void Parser::T() {
 void Parser::F() {
     if (c_type == LEX_ID) {
         check_id();
-        poliz.push_back(Lex( LEX_ID, c_val));
+        poliz.push_back(Lex(LEX_ID, c_val));
         gl();
     }
     else if (c_type == LEX_NUM) {
@@ -361,4 +364,11 @@ void Parser::check_id_in_read() {
     if (!TID[c_val].get_declare()) {
         throw "not declared";        
     }
+}
+
+void Parser::gl() {
+    curr_lex = scan.get_lex();
+    c_type = curr_lex.get_type();
+    c_val = curr_lex.get_value();
+    cout << "Lexeme read: " << curr_lex << endl;
 }

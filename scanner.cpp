@@ -1,12 +1,21 @@
 #include "scanner.hpp"
 
+#include <iostream>
+//#include <errno.h>
+
 using namespace std;
+
+const char* Scanner::TW[] = {"", "and", "begin", "bool", "do", "else", "end", "if", "false", "int", "not", "or", "program", 
+                            "read", "then", "true", "var", "while", "write", NULL};
+ 
+const char* Scanner::TD[] = {"@", ";", ",", ":", ":=", "(", ")", "=", "<", ">", "+", "-", "*", "/", "<=", "!=", ">=", NULL};
 
 int Scanner::look(const string buf, const char** list) {
     int i = 0;
     while(list[i]) {
-        if (buf == list[i])
-            return i;
+        if (buf == list[i]){
+            return i;            
+        }
         ++i;
     }
     return 0;
@@ -18,6 +27,8 @@ void Scanner::gc() {
 
 Scanner::Scanner(const char * program) {
     if (!(fp = fopen(program, "r"))) {
+        cout << program << endl;
+        //cout << errno << endl;
         throw "can't open file";
     }
 }
@@ -71,7 +82,7 @@ Lex Scanner::get_lex() {
                     ungetc(c, fp);
                     if ((j = look(buf, TW))) {
                         return Lex((type_of_lex)j, j);
-                        }
+                    }
                     else {
                         j = put(buf);
                         return Lex(LEX_ID, j);

@@ -1,0 +1,7 @@
+program 
+var a: int;
+begin 
+	a := 5;
+	write(a)
+end
+@
