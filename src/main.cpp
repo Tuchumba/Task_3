@@ -12,7 +12,7 @@ int main(int argc, char** argv) {
     }
     try {
         Interpretator I(argv[1]); //.mlg - Model Language
-        I.interpretation ();
+        I.interpretation();
         return 0;
     }
     catch (char& c) {

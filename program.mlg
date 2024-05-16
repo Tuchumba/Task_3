@@ -1,11 +1,8 @@
 program
-var aint1,aint2 : int, bol : bool, rec : record[ var a:int ];
+var rec: record[ var a:int, recr:record[ var a:int]];
 begin
-    aint1 := 13;
     rec.a := 1;
     write(rec.a);
-    if aint1 > 0 then aint2 := 24 - aint1 else aint2 := 0;
-    bol := true;
-    write(bol);
-    write(aint2)
+    rec.recr.a := 2;
+    write(rec.recr.a)
 end@

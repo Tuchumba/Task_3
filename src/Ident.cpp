@@ -52,9 +52,15 @@ int Ident::get_value() const {
     return value; 
 }
 
-void Ident::put_value(int v) { 
+void Ident::put_value(int v) {
     value = v; 
 }
+
+std::string Ident::get_namespace() const{
+    std::string::size_type pos = name.rfind('.');
+    return pos != std::string::npos ? name.substr(0, pos) : "";
+}
+
 
 vector<Ident> TID;
 

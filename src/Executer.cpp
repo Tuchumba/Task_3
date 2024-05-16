@@ -18,10 +18,10 @@ void Executer::execute(vector<Lex>& poliz) {
     while (index < size) {
         pc_el = poliz[index];
         switch (pc_el.get_type()) {
-            case LEX_TRUE: 
-            case LEX_FALSE: 
-            case LEX_NUM: 
-            case POLIZ_ADDRESS: 
+            case LEX_TRUE:
+            case LEX_FALSE:
+            case LEX_NUM:
+            case POLIZ_ADDRESS:
             case POLIZ_LABEL:
                 args.push(pc_el.get_value());
                 break;
@@ -30,8 +30,14 @@ void Executer::execute(vector<Lex>& poliz) {
                 if (TID[i].get_assign()) {
                     args.push(TID[i].get_value());
                     break;
-                }
-                else {
+                } else if(TID[i].get_type()==LEX_RECORD){
+                    // for(Ident x:TID){
+                    //     if(x.get_namespace()==TID[i].get_name()){
+                    //         args.push(x.get_value());
+                    //     }
+                    // }
+                    throw "Record functions undefined";
+                }else{
                     throw "POLIZ: indefinite identifier";                    
                 }
  
@@ -61,14 +67,16 @@ void Executer::execute(vector<Lex>& poliz) {
                 }
                 break;
             case LEX_WRITE:
-                from_stack (args, j);
-                cout << j << endl;
+                while(!args.empty()){
+                    from_stack(args, j);
+                    cout << j << endl;
+                }
                 break;
             case LEX_READ:
                 int k;
-                from_stack (args, i);
+                from_stack(args, i);
                 if (TID[i].get_type () == LEX_INT) {
-                    cout << "Input int value for" << TID[i].get_name () << endl;
+                    cout << "Input int value for " << TID[i].get_name () << endl;
                     cin >> k;
                 }
                 else {

@@ -28,6 +28,7 @@ public:
     void put_assign();
     int get_value() const;
     void put_value(int v);
+    std::string get_namespace() const;
 };
 int put(const std::string& buf);
 
