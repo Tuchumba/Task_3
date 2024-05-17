@@ -5,7 +5,7 @@ BIN := bin
 SRC := src
 INCLUDE := include
 
-LIBS := `fltk-config --ldflags`
+LIBS :=
 EXE := interpreter.exe
 
 
