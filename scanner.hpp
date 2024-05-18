@@ -17,6 +17,7 @@ public:
     Scanner(const char * program);
     Lex get_lex();
     void put_status(bool s);
+    ~Scanner();
 private:
     FILE* fp;
     char c;

@@ -5,8 +5,8 @@ D → I {, I}: [ int | bool | record D2; ]
 B → begin S {;S} end
 S → I1 := E | if E then S else S | while E do S | B | read (I1) | write (E)
 E → E1 [ = | < | > | != ] E1 | E1
-E1 → T {[  |  | or ] T}
-T → F {[  | / | and ] F}
+E1 → T {[+ | - | or ] T}
+T → F {[ * | / | and ] F}
 F → I1 | N | L | not F | (E)
 L → true | false
 I1 → I | I.I1

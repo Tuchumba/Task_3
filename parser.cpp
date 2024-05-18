@@ -172,7 +172,7 @@ void Parser::S() {
             gl();
             S();
             poliz.push_back(Lex(POLIZ_LABEL, pl0));
-            poliz.push_back(Lex ( POLIZ_GO));
+            poliz.push_back(Lex(POLIZ_GO));
             poliz[pl1] = Lex(POLIZ_LABEL, poliz.size());
         }
         else {
@@ -185,7 +185,7 @@ void Parser::S() {
             gl();
             if (c_type == LEX_ID) {
                 check_id_in_read();
-                poliz.push_back(Lex( POLIZ_ADDRESS, c_val));
+                poliz.push_back(Lex(POLIZ_ADDRESS, c_val));
                 gl();
             }
             else {
@@ -193,7 +193,7 @@ void Parser::S() {
             }
             if (c_type == LEX_RPAREN) {
                 gl();
-                poliz.push_back(Lex (LEX_READ));
+                poliz.push_back(Lex(LEX_READ));
             }    
             else {
                 throw curr_lex;                
@@ -308,21 +308,6 @@ void Parser::F() {
         throw curr_lex;        
     }
 }
-
-
-// void Parser::dec(type_of_lex type) {
-//     int i;
-//     while (!st_int.empty()) {
-//         from_st(st_int, i);
-//         if (TID[i].get_declare()) {
-//             throw "twice";            
-//         }
-//         else {
-//             TID[i].put_declare();
-//             TID[i].put_type(type);
-//         }
-//     }
-// }
 
 void Parser::check_id() {
     if (TID[c_val].get_declare()) {

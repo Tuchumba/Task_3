@@ -35,6 +35,10 @@ Scanner::Scanner(const char * program) {
     }
 }
 
+Scanner::~Scanner() {
+    fclose(fp);
+}
+
 void Scanner::put_status(bool s) {
     status = s;
 }
